@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .todo-app {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .todo-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #f4f4f4;
+        }
+        li.completed {
+            text-decoration: line-through;
+            color: #999;
+        }
+        .delete-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-btn:hover {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="todo-app">
+        <h1>To-Do List</h1>
+        <div class="todo-input">
+            <input type="text" id="taskInput" placeholder="Enter a new task">
+            <button id="addTaskButton">Add Task</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const taskInput = document.getElementById("taskInput");
+            const addTaskButton = document.getElementById("addTaskButton");
+            const taskList = document.getElementById("taskList");
+
+            // Add a task to the list
+            addTaskButton.addEventListener("click", () => {
+                const taskText = taskInput.value.trim();
+                if (taskText !== "") {
+                    const taskItem = createTaskItem(taskText);
+                    taskList.appendChild(taskItem);
+                    taskInput.value = ""; // Clear input field
+                }
+            });
+
+            // Create a task item
+            function createTaskItem(text) {
+                const li = document.createElement("li");
+
+                const span = document.createElement("span");
+                span.textContent = text;
+                span.addEventListener("click", () => {
+                    li.classList.toggle("completed");
+                });
+
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.className = "delete-btn";
+                deleteButton.addEventListener("click", () => {
+                    taskList.removeChild(li);
+                });
+
+                li.appendChild(span);
+                li.appendChild(deleteButton);
+
+                return li;
+            }
+        });
+    </script>
+
+</body>
+</html>
